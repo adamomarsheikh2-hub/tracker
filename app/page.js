@@ -58,43 +58,80 @@ function zoneColor(log) {
 }
 
 function zoneBg(log) {
-  if (!log) return "rgba(255,255,255,0.035)";
+  if (!log) return "rgba(255,255,255,0.03)";
   if (!isReady(log)) return COMPOUNDS[log.compound]?.bg || "rgba(251,146,60,0.08)";
   return "rgba(52,211,153,0.07)";
 }
 
 // ── Abdomen SVG ───────────────────────────────────────────────────────────────
 const ABD_POS = {
-  ABD_UL: { cx: 70,  cy: 74  },
-  ABD_UR: { cx: 130, cy: 74  },
-  ABD_ML: { cx: 57,  cy: 120 },
-  ABD_MR: { cx: 143, cy: 120 },
-  ABD_LL: { cx: 70,  cy: 166 },
-  ABD_LR: { cx: 130, cy: 166 },
+  ABD_UL: { cx: 70,  cy: 80  },
+  ABD_UR: { cx: 130, cy: 80  },
+  ABD_ML: { cx: 56,  cy: 128 },
+  ABD_MR: { cx: 144, cy: 128 },
+  ABD_LL: { cx: 70,  cy: 176 },
+  ABD_LR: { cx: 130, cy: 176 },
 };
 
 function AbdomenSVG({ logs, onZoneClick }) {
   return (
-    <svg
-      viewBox="0 0 200 245"
-      style={{ width: "100%", maxWidth: 240, height: "auto", display: "block" }}
-    >
-      {/* Outer torso silhouette */}
+    <svg viewBox="0 0 200 258" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block" }}>
+
+      {/* ── Torso silhouette ── */}
       <path
-        d="M 56,18 C 44,48 40,80 42,118 C 42,154 46,183 60,212 L 140,212 C 154,183 158,154 158,118 C 160,80 156,48 144,18 Z"
-        fill="rgba(255,255,255,0.025)"
-        stroke="rgba(255,255,255,0.1)"
-        strokeWidth="1.2"
+        d="M 62,14 C 50,42 45,76 46,116 C 46,155 50,186 64,218 C 76,228 90,232 100,232 C 110,232 124,228 136,218 C 150,186 154,155 154,116 C 155,76 150,42 138,14 Z"
+        fill="rgba(255,255,255,0.022)"
+        stroke="rgba(255,255,255,0.14)"
+        strokeWidth="1.3"
       />
-      {/* Linea alba — vertical center line */}
-      <line x1="100" y1="22" x2="100" y2="208" stroke="rgba(255,255,255,0.055)" strokeWidth="0.8" strokeDasharray="3,6" />
-      {/* Horizontal zone dividers */}
-      <line x1="52" y1="97"  x2="148" y2="97"  stroke="rgba(255,255,255,0.04)" strokeWidth="0.7" strokeDasharray="3,6" />
-      <line x1="50" y1="143" x2="150" y2="143" stroke="rgba(255,255,255,0.04)" strokeWidth="0.7" strokeDasharray="3,6" />
-      {/* Belly button */}
-      <ellipse cx="100" cy="120" rx="6" ry="4.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.22)" strokeWidth="1.3" />
-      <line x1="100" y1="115.5" x2="100" y2="124.5" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
-      {/* Zone dots */}
+
+      {/* ── Costal arch (lower rib margin) ── */}
+      <path d="M 64,16 C 72,8 86,5 100,5 C 114,5 128,8 136,16"
+        fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.1" strokeLinecap="round"/>
+      {/* Costal margin side drops */}
+      <path d="M 58,20 C 52,30 49,42 48,56"
+        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.9" strokeLinecap="round"/>
+      <path d="M 142,20 C 148,30 151,42 152,56"
+        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.9" strokeLinecap="round"/>
+
+      {/* ── Linea alba ── */}
+      <line x1="100" y1="18" x2="100" y2="224"
+        stroke="rgba(255,255,255,0.07)" strokeWidth="0.8" strokeDasharray="2,5"/>
+
+      {/* ── Rectus abdominis column hints ── */}
+      <path d="M 91,18 C 89,68 88,112 89,162 C 90,190 92,212 95,224"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1"/>
+      <path d="M 109,18 C 111,68 112,112 111,162 C 110,190 108,212 105,224"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1"/>
+
+      {/* ── Tendinous inscriptions (3 bands) ── */}
+      <path d="M 89,86 Q 94,84 100,84 Q 106,84 111,86"
+        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
+      <path d="M 89,128 Q 94,126 100,126 Q 106,126 111,128"
+        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
+      <path d="M 89,168 Q 94,166 100,166 Q 106,166 111,168"
+        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
+
+      {/* ── External oblique hints ── */}
+      <path d="M 60,18 C 53,50 49,88 47,118"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9"/>
+      <path d="M 140,18 C 147,50 151,88 153,118"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9"/>
+
+      {/* ── Inguinal ligament V ── */}
+      <path d="M 64,214 C 74,224 88,228 100,228"
+        fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" strokeLinecap="round"/>
+      <path d="M 136,214 C 126,224 112,228 100,228"
+        fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" strokeLinecap="round"/>
+
+      {/* ── Belly button (layered for depth) ── */}
+      <ellipse cx="100" cy="130" rx="7.5" ry="6"
+        fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2"/>
+      <ellipse cx="100" cy="129.5" rx="4.8" ry="3.8"
+        fill="rgba(0,0,0,0.6)" stroke="rgba(255,255,255,0.09)" strokeWidth="1"/>
+      <ellipse cx="100" cy="129" rx="2.2" ry="1.8" fill="rgba(0,0,0,0.7)"/>
+
+      {/* ── Zone crosshair targets ── */}
       {ZONES.filter(z => z.area === "abdomen").map(zone => {
         const { cx, cy } = ABD_POS[zone.id];
         const log   = logs[zone.id];
@@ -102,25 +139,25 @@ function AbdomenSVG({ logs, onZoneClick }) {
         const bg    = zoneBg(log);
         return (
           <g key={zone.id} onClick={() => onZoneClick(zone)} style={{ cursor: "pointer" }}>
-            {/* Tap target */}
-            <circle cx={cx} cy={cy} r="24" fill="transparent" />
-            {/* Zone circle */}
-            <circle cx={cx} cy={cy} r="18" fill={bg} stroke={color} strokeWidth="1.5" />
-            <text
-              x={cx} y={cy - 2}
+            {/* Large invisible tap target */}
+            <circle cx={cx} cy={cy} r="26" fill="transparent"/>
+            {/* Main circle */}
+            <circle cx={cx} cy={cy} r="17" fill={bg} stroke={color} strokeWidth="1.3"/>
+            {/* Crosshair ticks outside the circle */}
+            <line x1={cx-22} y1={cy}    x2={cx-19} y2={cy}    stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
+            <line x1={cx+19} y1={cy}    x2={cx+22} y2={cy}    stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
+            <line x1={cx}    y1={cy-22} x2={cx}    y2={cy-19} stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
+            <line x1={cx}    y1={cy+19} x2={cx}    y2={cy+22} stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
+            {/* Zone label */}
+            <text x={cx} y={log ? cy - 3 : cy}
               textAnchor="middle" dominantBaseline="middle"
-              fontSize="7.5" fontWeight="700" fill={color}
-              fontFamily="system-ui"
-            >
+              fontSize="7.5" fontWeight="700" fill={color} fontFamily="system-ui" letterSpacing="0.5">
               {zone.short}
             </text>
             {log && (
-              <text
-                x={cx} y={cy + 8}
+              <text x={cx} y={cy + 7}
                 textAnchor="middle" dominantBaseline="middle"
-                fontSize="5.5" fill={color} opacity="0.65"
-                fontFamily="system-ui"
-              >
+                fontSize="5.5" fill={color} opacity="0.6" fontFamily="system-ui">
                 {isReady(log) ? "ready" : fmtCool(coolLeft(log))}
               </text>
             )}
@@ -133,45 +170,96 @@ function AbdomenSVG({ logs, onZoneClick }) {
 
 // ── Glute SVG ─────────────────────────────────────────────────────────────────
 function GluteSVG({ logs, onZoneClick }) {
-  const log    = logs["GLT_L"];
+  const log   = logs["GLT_L"];
   const lColor = zoneColor(log);
-  const lBg    = zoneBg(log);
+  const lBg   = zoneBg(log);
+  const GLT_L = ZONES.find(z => z.id === "GLT_L");
 
   return (
-    <svg
-      viewBox="0 0 200 150"
-      style={{ width: "100%", maxWidth: 240, height: "auto", display: "block" }}
-    >
-      {/* Lower back band */}
+    <svg viewBox="0 0 200 178" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block" }}>
+
+      {/* ── Sacrum ── */}
       <path
-        d="M 28,28 C 52,18 76,14 100,14 C 124,14 148,18 172,28 L 170,50 C 148,42 124,38 100,38 C 76,38 52,42 30,50 Z"
-        fill="rgba(255,255,255,0.025)"
-        stroke="rgba(255,255,255,0.09)"
+        d="M 88,16 L 112,16 C 110,38 106,56 100,66 C 94,56 90,38 88,16 Z"
+        fill="rgba(255,255,255,0.028)"
+        stroke="rgba(255,255,255,0.12)"
         strokeWidth="1"
       />
-      {/* Gluteal cleft */}
-      <line x1="100" y1="36" x2="100" y2="138" stroke="rgba(255,255,255,0.07)" strokeWidth="0.9" />
-      {/* Left glute — ACTIVE */}
-      <ellipse cx="60" cy="93" rx="48" ry="50" fill={lBg} stroke={lColor} strokeWidth="1.5" />
-      {/* Left gluteal fold */}
-      <path d="M 18,128 C 30,138 46,143 62,142 C 76,141 84,136 92,132" fill="none" stroke="rgba(255,255,255,0.09)" strokeWidth="0.9" />
-      {/* Right glute — INACTIVE */}
-      <ellipse cx="140" cy="93" rx="48" ry="50" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.07)" strokeWidth="1" strokeDasharray="4,4" />
-      {/* Right gluteal fold */}
-      <path d="M 182,128 C 170,138 154,143 138,142 C 124,141 116,136 108,132" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.9" />
+      {/* Sacral foramina (pairs) */}
+      {[[94,26],[106,26],[93,36],[107,36],[93,46],[107,46],[93,56],[107,56]].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="1.8" fill="rgba(255,255,255,0.16)"/>
+      ))}
+      {/* Coccyx tip */}
+      <path d="M 96,66 C 97,72 98,78 100,82 C 102,78 103,72 104,66"
+        fill="none" stroke="rgba(255,255,255,0.09)" strokeWidth="0.9"/>
 
-      {/* Left glute tap target + label */}
-      <g onClick={() => onZoneClick(ZONES.find(z => z.id === "GLT_L"))} style={{ cursor: "pointer" }}>
-        <circle cx="60" cy="93" r="32" fill="transparent" />
-        <text x="60" y="88" textAnchor="middle" dominantBaseline="middle" fontSize="9" fontWeight="700" fill={lColor} fontFamily="system-ui">GL</text>
-        <text x="60" y="100" textAnchor="middle" dominantBaseline="middle" fontSize="6.5" fill={lColor} opacity="0.65" fontFamily="system-ui">
-          {log ? (isReady(log) ? "ready" : fmtCool(coolLeft(log))) : "left"}
-        </text>
+      {/* ── Iliac crests ── */}
+      <path d="M 100,28 C 96,26 86,22 72,20 C 56,18 40,24 28,36 C 20,44 16,56 18,68"
+        fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.3" strokeLinecap="round"/>
+      <path d="M 100,28 C 104,26 114,22 128,20 C 144,18 160,24 172,36 C 180,44 184,56 182,68"
+        fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.3" strokeLinecap="round"/>
+
+      {/* ── PSIS dimples ── */}
+      <circle cx="82" cy="58" r="3" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1"/>
+      <circle cx="82" cy="58" r="1" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="118" cy="58" r="3" fill="none" stroke="rgba(255,255,255,0.09)" strokeWidth="0.8"/>
+      <circle cx="118" cy="58" r="1" fill="rgba(255,255,255,0.09)"/>
+
+      {/* ── Gluteal cleft ── */}
+      <line x1="100" y1="66" x2="100" y2="162" stroke="rgba(255,255,255,0.09)" strokeWidth="1"/>
+
+      {/* ── Left glute (ACTIVE) ── */}
+      <path
+        d="M 100,72 C 98,90 98,114 100,142 C 90,154 74,162 56,160 C 38,156 24,142 18,120 C 14,100 16,78 26,64 C 36,52 52,46 68,46 C 84,46 96,58 100,72 Z"
+        fill={lBg}
+        stroke={lColor}
+        strokeWidth="1.4"
+      />
+      {/* Left gluteal fold */}
+      <path d="M 18,136 C 30,150 50,158 68,158 C 84,158 94,152 100,146"
+        fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeLinecap="round"/>
+      {/* Left greater trochanter hint */}
+      <path d="M 16,80 C 14,90 14,102 16,112"
+        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1.2" strokeLinecap="round"/>
+
+      {/* ── Right glute (INACTIVE) ── */}
+      <path
+        d="M 100,72 C 102,90 102,114 100,142 C 110,154 126,162 144,160 C 162,156 176,142 182,120 C 186,100 184,78 174,64 C 164,52 148,46 132,46 C 116,46 104,58 100,72 Z"
+        fill="rgba(255,255,255,0.015)"
+        stroke="rgba(255,255,255,0.09)"
+        strokeWidth="1"
+        strokeDasharray="4,4"
+      />
+      {/* Right gluteal fold */}
+      <path d="M 182,136 C 170,150 150,158 132,158 C 116,158 106,152 100,146"
+        fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeLinecap="round"/>
+      {/* Right greater trochanter hint */}
+      <path d="M 184,80 C 186,90 186,102 184,112"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1.2" strokeLinecap="round"/>
+
+      {/* ── Left zone crosshair target ── */}
+      <g onClick={() => onZoneClick(GLT_L)} style={{ cursor: "pointer" }}>
+        <circle cx="56" cy="108" r="28" fill="transparent"/>
+        <circle cx="56" cy="108" r="17" fill={lBg} stroke={lColor} strokeWidth="1.3"/>
+        <line x1="34"  y1="108" x2="37"  y2="108" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
+        <line x1="75"  y1="108" x2="78"  y2="108" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
+        <line x1="56"  y1="86"  x2="56"  y2="89"  stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
+        <line x1="56"  y1="127" x2="56"  y2="130" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
+        <text x="56" y={log ? "105" : "108"} textAnchor="middle" dominantBaseline="middle"
+          fontSize="7.5" fontWeight="700" fill={lColor} fontFamily="system-ui" letterSpacing="0.5">GL</text>
+        {log && (
+          <text x="56" y="116" textAnchor="middle" dominantBaseline="middle"
+            fontSize="5.5" fill={lColor} opacity="0.6" fontFamily="system-ui">
+            {isReady(log) ? "ready" : fmtCool(coolLeft(log))}
+          </text>
+        )}
       </g>
 
-      {/* Right glute — greyed out, not tappable */}
-      <text x="140" y="88"  textAnchor="middle" dominantBaseline="middle" fontSize="9"   fontWeight="600" fill="rgba(255,255,255,0.18)" fontFamily="system-ui">GR</text>
-      <text x="140" y="100" textAnchor="middle" dominantBaseline="middle" fontSize="6.5" fill="rgba(255,255,255,0.14)" fontFamily="system-ui">not used</text>
+      {/* ── Right glute — inactive label ── */}
+      <text x="144" y="105" textAnchor="middle" dominantBaseline="middle"
+        fontSize="7.5" fontWeight="600" fill="rgba(255,255,255,0.17)" fontFamily="system-ui">GR</text>
+      <text x="144" y="117" textAnchor="middle" dominantBaseline="middle"
+        fontSize="6" fill="rgba(255,255,255,0.12)" fontFamily="system-ui">not used</text>
     </svg>
   );
 }
@@ -189,21 +277,21 @@ function LogModal({ zone, prevLog, onConfirm, onCancel }) {
 
   const dismiss = (cb) => {
     setVisible(false);
-    setTimeout(cb, 260);
+    setTimeout(cb, 240);
   };
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop — simple dark overlay, no blur to avoid iOS touch issues */}
       <div
         onClick={() => dismiss(onCancel)}
         style={{
-          position: "fixed", inset: 0, zIndex: 40,
-          background: "rgba(0,0,0,0.55)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
+          position: "fixed",
+          top: 0, left: 0, right: 0, bottom: 0,
+          zIndex: 40,
+          background: "rgba(0,0,0,0.65)",
           opacity: visible ? 1 : 0,
-          transition: "opacity 260ms ease",
+          transition: "opacity 240ms ease",
         }}
       />
 
@@ -211,76 +299,83 @@ function LogModal({ zone, prevLog, onConfirm, onCancel }) {
       <div style={{
         position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 50,
         maxWidth: 400, margin: "0 auto",
-        background: "rgba(16,16,26,0.94)",
+        background: "rgba(14,14,24,0.96)",
         border: "1px solid rgba(255,255,255,0.1)",
         borderBottom: "none",
         borderRadius: "24px 24px 0 0",
         backdropFilter: "blur(40px)",
         WebkitBackdropFilter: "blur(40px)",
-        padding: "20px 20px 44px",
+        padding: "16px 20px 44px",
         transform: visible ? "translateY(0)" : "translateY(100%)",
-        transition: "transform 260ms cubic-bezier(0.32,0.72,0,1)",
+        transition: "transform 240ms cubic-bezier(0.32,0.72,0,1)",
       }}>
         {/* Drag handle */}
-        <div style={{ width: 36, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.14)", margin: "0 auto 22px" }} />
+        <div style={{ width: 36, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.13)", margin: "0 auto 20px" }}/>
 
-        {/* Zone info */}
+        {/* Close button */}
+        <button
+          onClick={() => dismiss(onCancel)}
+          style={{
+            position: "absolute", top: 18, right: 18,
+            width: 30, height: 30, borderRadius: "50%",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "rgba(255,255,255,0.5)",
+            fontSize: 16, lineHeight: 1, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: F,
+          }}
+        >×</button>
+
+        {/* Zone header */}
         <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 5, fontFamily: F }}>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.32)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 5, fontFamily: F }}>
             {zone.area === "abdomen" ? "Abdomen" : "Glute"}
           </div>
           <div style={{ fontSize: 21, fontWeight: 700, color: "#f0f0f8", letterSpacing: -0.4, fontFamily: F }}>
             {zone.label}
           </div>
           {prevLog && (
-            <div style={{ marginTop: 5, fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: F }}>
+            <div style={{ marginTop: 5, fontSize: 11, color: "rgba(255,255,255,0.28)", fontFamily: F }}>
               Last: {COMPOUNDS[prevLog.compound]?.label || prevLog.compound} · {fmtAgo(prevLog.time)}
             </div>
           )}
         </div>
 
-        {/* Compound selector */}
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, fontFamily: F }}>
+        {/* Compound */}
+        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, fontFamily: F }}>
           Compound
         </div>
         <div style={{ display: "flex", gap: 8, marginBottom: 22 }}>
           {Object.entries(COMPOUNDS).map(([key, c]) => (
-            <button
-              key={key}
-              onClick={() => setCompound(key)}
-              style={{
-                flex: 1, padding: "13px 0", borderRadius: 14,
-                background: compound === key ? c.bg : "rgba(255,255,255,0.04)",
-                border: `1px solid ${compound === key ? c.border : "rgba(255,255,255,0.07)"}`,
-                color: compound === key ? c.color : "rgba(255,255,255,0.35)",
-                fontSize: 14, fontWeight: 700, fontFamily: F, cursor: "pointer",
-                transition: "all 160ms ease",
-              }}
-            >
+            <button key={key} onClick={() => setCompound(key)} style={{
+              flex: 1, padding: "13px 0", borderRadius: 14,
+              background: compound === key ? c.bg : "rgba(255,255,255,0.04)",
+              border: `1px solid ${compound === key ? c.border : "rgba(255,255,255,0.07)"}`,
+              color: compound === key ? c.color : "rgba(255,255,255,0.32)",
+              fontSize: 14, fontWeight: 700, fontFamily: F, cursor: "pointer",
+              transition: "all 150ms ease",
+            }}>
               {c.label}
             </button>
           ))}
         </div>
 
-        {/* Time selector */}
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, fontFamily: F }}>
+        {/* Time */}
+        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, fontFamily: F }}>
           When
         </div>
-        <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, marginBottom: 24, scrollbarWidth: "none" }}>
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 4, marginBottom: 24, scrollbarWidth: "none" }}>
           {TIME_OPTS.map((opt, i) => (
-            <button
-              key={i}
-              onClick={() => setTimeIdx(i)}
-              style={{
-                flexShrink: 0, padding: "8px 13px", borderRadius: 100,
-                background: timeIdx === i ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${timeIdx === i ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.06)"}`,
-                color: timeIdx === i ? "#f0f0f8" : "rgba(255,255,255,0.38)",
-                fontSize: 12, fontFamily: F, cursor: "pointer",
-                transition: "all 140ms ease",
-                whiteSpace: "nowrap",
-              }}
-            >
+            <button key={i} onClick={() => setTimeIdx(i)} style={{
+              flexShrink: 0, padding: "8px 13px", borderRadius: 100,
+              background: timeIdx === i ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
+              border: `1px solid ${timeIdx === i ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.06)"}`,
+              color: timeIdx === i ? "#f0f0f8" : "rgba(255,255,255,0.36)",
+              fontSize: 12, fontFamily: F, cursor: "pointer",
+              transition: "all 130ms ease",
+              whiteSpace: "nowrap",
+            }}>
               {opt.label}
             </button>
           ))}
@@ -296,7 +391,7 @@ function LogModal({ zone, prevLog, onConfirm, onCancel }) {
             color: compound ? "#f0f0f8" : "rgba(255,255,255,0.2)",
             fontSize: 15, fontWeight: 600, fontFamily: F,
             cursor: compound ? "pointer" : "default",
-            transition: "all 160ms ease",
+            transition: "all 150ms ease",
           }}
         >
           {compound ? "Log Pin →" : "Select a compound"}
@@ -358,7 +453,6 @@ export default function InjectionTracker() {
   );
 
   const abdomenZones = ZONES.filter(z => z.area === "abdomen");
-  const activeZones  = ZONES.filter(z => z.active);
 
   return (
     <div style={{
@@ -376,9 +470,7 @@ export default function InjectionTracker() {
         <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 3.5, textTransform: "uppercase", marginBottom: 4 }}>
           Peptide Rotation
         </div>
-        <div style={{ fontSize: 23, fontWeight: 700, letterSpacing: -0.6 }}>
-          Injection Tracker
-        </div>
+        <div style={{ fontSize: 23, fontWeight: 700, letterSpacing: -0.6 }}>Injection Tracker</div>
       </div>
 
       {/* DB error */}
@@ -386,7 +478,7 @@ export default function InjectionTracker() {
         <div style={{
           width: "100%", marginBottom: 16, padding: "11px 14px", borderRadius: 12,
           background: "rgba(239,68,68,0.07)", border: "1px solid rgba(239,68,68,0.18)",
-          fontSize: 12, color: "#f87171", lineHeight: 1.5, fontFamily: F,
+          fontSize: 12, color: "#f87171", lineHeight: 1.5,
         }}>
           ⚠ {dbError}
         </div>
@@ -399,7 +491,7 @@ export default function InjectionTracker() {
         border: "1px solid rgba(255,255,255,0.07)",
         borderRadius: 100, padding: 3,
       }}>
-        {[["map","Map"], ["status","Status"], ["log","Log"]].map(([k, l]) => (
+        {[["map","Map"],["status","Status"],["log","Log"]].map(([k,l]) => (
           <button key={k} onClick={() => setTab(k)} style={{
             flex: 1, padding: "9px 0", borderRadius: 100,
             background: tab === k ? "rgba(255,255,255,0.12)" : "transparent",
@@ -414,46 +506,40 @@ export default function InjectionTracker() {
       {/* ── MAP ── */}
       {tab === "map" && (
         <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-          {/* Abdomen card */}
           <div style={{
             width: "100%",
             background: "rgba(255,255,255,0.03)",
             border: "1px solid rgba(255,255,255,0.08)",
-            borderTop: "1px solid rgba(255,255,255,0.11)",
-            borderRadius: 22,
-            padding: "18px 0 14px",
+            borderTop: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 22, padding: "16px 0 14px",
             display: "flex", flexDirection: "column", alignItems: "center",
           }}>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 14 }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.26)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 12 }}>
               Abdomen
             </div>
-            <AbdomenSVG logs={logs} onZoneClick={handleZoneClick} />
+            <AbdomenSVG logs={logs} onZoneClick={handleZoneClick}/>
           </div>
 
-          {/* Glutes card */}
           <div style={{
             width: "100%",
             background: "rgba(255,255,255,0.03)",
             border: "1px solid rgba(255,255,255,0.08)",
-            borderTop: "1px solid rgba(255,255,255,0.11)",
-            borderRadius: 22,
-            padding: "16px 0 12px",
+            borderTop: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 22, padding: "16px 0 12px",
             display: "flex", flexDirection: "column", alignItems: "center",
           }}>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 10 }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.26)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 10 }}>
               Glutes
             </div>
-            <GluteSVG logs={logs} onZoneClick={handleZoneClick} />
+            <GluteSVG logs={logs} onZoneClick={handleZoneClick}/>
           </div>
 
-          {/* Legend */}
-          <div style={{ display: "flex", gap: 18, marginTop: 4, fontSize: 11, color: "rgba(255,255,255,0.32)" }}>
+          <div style={{ display: "flex", gap: 18, marginTop: 2, fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
             <span><span style={{ color: "#5cc8f0" }}>●</span> GHK-Cu</span>
             <span><span style={{ color: "#b890e8" }}>●</span> IPA+CJC</span>
             <span><span style={{ color: "#34d399" }}>●</span> Ready</span>
           </div>
-
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", marginTop: 0 }}>
             Tap a zone to log a pin
           </div>
         </div>
@@ -462,8 +548,7 @@ export default function InjectionTracker() {
       {/* ── STATUS ── */}
       {tab === "status" && (
         <div style={{ width: "100%" }}>
-          {/* Abdomen section */}
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 12 }}>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.26)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 12 }}>
             Abdomen
           </div>
           {abdomenZones.map(zone => {
@@ -479,38 +564,23 @@ export default function InjectionTracker() {
                 display: "flex", justifyContent: "space-between", alignItems: "center",
               }}>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#f0f0f8", marginBottom: 3 }}>
-                    {zone.label}
-                  </div>
-                  {log ? (
-                    <div style={{ fontSize: 11, color: c ? c.color : "rgba(255,255,255,0.35)" }}>
-                      {c?.label || "—"} · {fmtAgo(log.time)}
-                    </div>
-                  ) : (
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Never pinned</div>
-                  )}
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#f0f0f8", marginBottom: 3 }}>{zone.label}</div>
+                  {log
+                    ? <div style={{ fontSize: 11, color: c ? c.color : "rgba(255,255,255,0.35)" }}>{c?.label || "—"} · {fmtAgo(log.time)}</div>
+                    : <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Never pinned</div>
+                  }
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
-                  {ready ? (
-                    <span style={{
-                      fontSize: 11, fontWeight: 600, color: "#34d399",
-                      background: "rgba(52,211,153,0.08)",
-                      border: "1px solid rgba(52,211,153,0.18)",
-                      padding: "4px 10px", borderRadius: 100,
-                    }}>Ready</span>
-                  ) : (
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div>
-                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div>
-                    </div>
-                  )}
+                  {ready
+                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
+                    : <div><div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div><div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div></div>
+                  }
                 </div>
               </div>
             );
           })}
 
-          {/* Glute section */}
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2.5, textTransform: "uppercase", margin: "18px 0 12px" }}>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.26)", letterSpacing: 2.5, textTransform: "uppercase", margin: "18px 0 12px" }}>
             Glutes
           </div>
           {(() => {
@@ -528,54 +598,38 @@ export default function InjectionTracker() {
               }}>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: "#f0f0f8", marginBottom: 3 }}>{zone.label}</div>
-                  {log ? (
-                    <div style={{ fontSize: 11, color: c ? c.color : "rgba(255,255,255,0.35)" }}>
-                      {c?.label || "—"} · {fmtAgo(log.time)}
-                    </div>
-                  ) : (
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Never pinned</div>
-                  )}
+                  {log
+                    ? <div style={{ fontSize: 11, color: c ? c.color : "rgba(255,255,255,0.35)" }}>{c?.label || "—"} · {fmtAgo(log.time)}</div>
+                    : <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Never pinned</div>
+                  }
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
-                  {ready ? (
-                    <span style={{
-                      fontSize: 11, fontWeight: 600, color: "#34d399",
-                      background: "rgba(52,211,153,0.08)",
-                      border: "1px solid rgba(52,211,153,0.18)",
-                      padding: "4px 10px", borderRadius: 100,
-                    }}>Ready</span>
-                  ) : (
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div>
-                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div>
-                    </div>
-                  )}
+                  {ready
+                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
+                    : <div><div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div><div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div></div>
+                  }
                 </div>
               </div>
             );
           })()}
           <div style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.05)",
+            background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)",
             borderRadius: 14, padding: "13px 16px",
             display: "flex", justifyContent: "space-between", alignItems: "center",
           }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.25)" }}>Right Glute</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.15)" }}>Not used in rotation</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.22)" }}>Right Glute</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.14)" }}>Not used in rotation</div>
             </div>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", padding: "4px 10px" }}>—</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.16)", padding: "4px 10px" }}>—</span>
           </div>
 
-          {/* Reset */}
           <button
             onClick={() => { setLogs({}); setHistory([]); persist({}, []); }}
             style={{
               marginTop: 28, width: "100%", padding: "12px 0", borderRadius: 12,
-              background: "transparent",
-              border: "1px solid rgba(239,68,68,0.18)",
-              color: "rgba(239,68,68,0.45)",
-              fontSize: 12, fontFamily: F, cursor: "pointer",
+              background: "transparent", border: "1px solid rgba(239,68,68,0.18)",
+              color: "rgba(239,68,68,0.42)", fontSize: 12, fontFamily: F, cursor: "pointer",
             }}
           >
             Reset All Data
@@ -586,23 +640,20 @@ export default function InjectionTracker() {
       {/* ── LOG ── */}
       {tab === "log" && (
         <div style={{ width: "100%" }}>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.28)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 14 }}>
+          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.26)", letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 14 }}>
             Pin History
           </div>
-
           {history.length === 0 && (
-            <div style={{ color: "rgba(255,255,255,0.2)", fontSize: 13, textAlign: "center", padding: "48px 0", fontFamily: F }}>
+            <div style={{ color: "rgba(255,255,255,0.2)", fontSize: 13, textAlign: "center", padding: "48px 0" }}>
               No pins logged yet.
             </div>
           )}
-
           {history.map((entry, i) => {
             const zone = ZONE_MAP[entry.zone];
             const c    = COMPOUNDS[entry.compound];
             return (
               <div key={i} style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
                 borderRadius: 13, padding: "12px 16px", marginBottom: 8,
                 display: "flex", justifyContent: "space-between", alignItems: "center",
               }}>
@@ -610,7 +661,7 @@ export default function InjectionTracker() {
                   <div style={{ fontSize: 13, fontWeight: 600, color: c?.color || "#f0f0f8", marginBottom: 3 }}>
                     {c?.label || entry.compound}
                   </div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.38)" }}>
                     {zone ? `${zone.label} (${zone.area === "abdomen" ? "Abd" : "Glt"})` : entry.zone}
                   </div>
                 </div>
