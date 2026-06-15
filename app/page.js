@@ -3,18 +3,18 @@ import { useState, useEffect } from "react";
 
 // ── Zones ─────────────────────────────────────────────────────────────────────
 const ZONES = [
-  { id: "ABD_1",  short: "1",  label: "Upper · Outer Left",  area: "abdomen", active: true },
-  { id: "ABD_2",  short: "2",  label: "Upper · Inner Left",  area: "abdomen", active: true },
-  { id: "ABD_3",  short: "3",  label: "Upper · Inner Right", area: "abdomen", active: true },
-  { id: "ABD_4",  short: "4",  label: "Upper · Outer Right", area: "abdomen", active: true },
-  { id: "ABD_5",  short: "5",  label: "Mid · Outer Left",    area: "abdomen", active: true },
-  { id: "ABD_6",  short: "6",  label: "Mid · Inner Left",    area: "abdomen", active: true },
-  { id: "ABD_7",  short: "7",  label: "Mid · Inner Right",   area: "abdomen", active: true },
-  { id: "ABD_8",  short: "8",  label: "Mid · Outer Right",   area: "abdomen", active: true },
-  { id: "ABD_9",  short: "9",  label: "Lower · Outer Left",  area: "abdomen", active: true },
-  { id: "ABD_10", short: "10", label: "Lower · Inner Left",  area: "abdomen", active: true },
-  { id: "ABD_11", short: "11", label: "Lower · Inner Right", area: "abdomen", active: true },
-  { id: "ABD_12", short: "12", label: "Lower · Outer Right", area: "abdomen", active: true },
+  { id: "ABD_1",  short: "ULo", label: "Upper · Outer Left",  area: "abdomen", active: true },
+  { id: "ABD_2",  short: "ULi", label: "Upper · Inner Left",  area: "abdomen", active: true },
+  { id: "ABD_3",  short: "URi", label: "Upper · Inner Right", area: "abdomen", active: true },
+  { id: "ABD_4",  short: "URo", label: "Upper · Outer Right", area: "abdomen", active: true },
+  { id: "ABD_5",  short: "MLo", label: "Mid · Outer Left",    area: "abdomen", active: true },
+  { id: "ABD_6",  short: "MLi", label: "Mid · Inner Left",    area: "abdomen", active: true },
+  { id: "ABD_7",  short: "MRi", label: "Mid · Inner Right",   area: "abdomen", active: true },
+  { id: "ABD_8",  short: "MRo", label: "Mid · Outer Right",   area: "abdomen", active: true },
+  { id: "ABD_9",  short: "LLo", label: "Lower · Outer Left",  area: "abdomen", active: true },
+  { id: "ABD_10", short: "LLi", label: "Lower · Inner Left",  area: "abdomen", active: true },
+  { id: "ABD_11", short: "LRi", label: "Lower · Inner Right", area: "abdomen", active: true },
+  { id: "ABD_12", short: "LRo", label: "Lower · Outer Right", area: "abdomen", active: true },
   { id: "GLT_L",  short: "GL", label: "Left Glute",          area: "glute",   active: true  },
   { id: "GLT_R",  short: "GR", label: "Right Glute",         area: "glute",   active: false },
 ];
@@ -122,7 +122,7 @@ function AbdomenSVG({ logs, onZoneClick }) {
             {/* Label */}
             <text x={cx} y={cy}
               textAnchor="middle" dominantBaseline="middle"
-              fontSize="7" fontWeight="700" fill={color} fontFamily="system-ui" letterSpacing="0.2">
+              fontSize="6" fontWeight="700" fill={color} fontFamily="system-ui" letterSpacing="-0.1">
               {zone.short}
             </text>
           </g>
