@@ -3,14 +3,20 @@ import { useState, useEffect } from "react";
 
 // ── Zones ─────────────────────────────────────────────────────────────────────
 const ZONES = [
-  { id: "ABD_UL", label: "Upper Left",  short: "UL", area: "abdomen", active: true },
-  { id: "ABD_UR", label: "Upper Right", short: "UR", area: "abdomen", active: true },
-  { id: "ABD_ML", label: "Mid Left",    short: "ML", area: "abdomen", active: true },
-  { id: "ABD_MR", label: "Mid Right",   short: "MR", area: "abdomen", active: true },
-  { id: "ABD_LL", label: "Lower Left",  short: "LL", area: "abdomen", active: true },
-  { id: "ABD_LR", label: "Lower Right", short: "LR", area: "abdomen", active: true },
-  { id: "GLT_L",  label: "Left Glute",  short: "GL", area: "glute",   active: true  },
-  { id: "GLT_R",  label: "Right Glute", short: "GR", area: "glute",   active: false },
+  { id: "ABD_1",  short: "1",  label: "Upper · Outer Left",  area: "abdomen", active: true },
+  { id: "ABD_2",  short: "2",  label: "Upper · Inner Left",  area: "abdomen", active: true },
+  { id: "ABD_3",  short: "3",  label: "Upper · Inner Right", area: "abdomen", active: true },
+  { id: "ABD_4",  short: "4",  label: "Upper · Outer Right", area: "abdomen", active: true },
+  { id: "ABD_5",  short: "5",  label: "Mid · Outer Left",    area: "abdomen", active: true },
+  { id: "ABD_6",  short: "6",  label: "Mid · Inner Left",    area: "abdomen", active: true },
+  { id: "ABD_7",  short: "7",  label: "Mid · Inner Right",   area: "abdomen", active: true },
+  { id: "ABD_8",  short: "8",  label: "Mid · Outer Right",   area: "abdomen", active: true },
+  { id: "ABD_9",  short: "9",  label: "Lower · Outer Left",  area: "abdomen", active: true },
+  { id: "ABD_10", short: "10", label: "Lower · Inner Left",  area: "abdomen", active: true },
+  { id: "ABD_11", short: "11", label: "Lower · Inner Right", area: "abdomen", active: true },
+  { id: "ABD_12", short: "12", label: "Lower · Outer Right", area: "abdomen", active: true },
+  { id: "GLT_L",  short: "GL", label: "Left Glute",          area: "glute",   active: true  },
+  { id: "GLT_R",  short: "GR", label: "Right Glute",         area: "glute",   active: false },
 ];
 
 const ZONE_MAP = Object.fromEntries(ZONES.map(z => [z.id, z]));
@@ -65,73 +71,43 @@ function zoneBg(log) {
 
 // ── Abdomen SVG ───────────────────────────────────────────────────────────────
 const ABD_POS = {
-  ABD_UL: { cx: 70,  cy: 80  },
-  ABD_UR: { cx: 130, cy: 80  },
-  ABD_ML: { cx: 56,  cy: 128 },
-  ABD_MR: { cx: 144, cy: 128 },
-  ABD_LL: { cx: 70,  cy: 176 },
-  ABD_LR: { cx: 130, cy: 176 },
+  ABD_1:  { cx: 58, cy: 78  }, ABD_2:  { cx: 82, cy: 78  }, ABD_3:  { cx: 118, cy: 78  }, ABD_4:  { cx: 142, cy: 78  },
+  ABD_5:  { cx: 58, cy: 124 }, ABD_6:  { cx: 82, cy: 124 }, ABD_7:  { cx: 118, cy: 124 }, ABD_8:  { cx: 142, cy: 124 },
+  ABD_9:  { cx: 58, cy: 170 }, ABD_10: { cx: 82, cy: 170 }, ABD_11: { cx: 118, cy: 170 }, ABD_12: { cx: 142, cy: 170 },
 };
 
 function AbdomenSVG({ logs, onZoneClick }) {
   return (
-    <svg viewBox="0 0 200 258" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block" }}>
+    <svg viewBox="0 0 200 250" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }}>
 
       {/* ── Torso silhouette ── */}
       <path
-        d="M 62,14 C 50,42 45,76 46,116 C 46,155 50,186 64,218 C 76,228 90,232 100,232 C 110,232 124,228 136,218 C 150,186 154,155 154,116 C 155,76 150,42 138,14 Z"
+        d="M 60,14 C 48,40 44,72 44,108 C 44,150 44,184 58,212 C 72,226 88,232 100,232 C 112,232 128,226 142,212 C 156,184 156,150 156,108 C 156,72 152,40 140,14 Z"
         fill="rgba(255,255,255,0.022)"
         stroke="rgba(255,255,255,0.14)"
         strokeWidth="1.3"
       />
 
-      {/* ── Costal arch (lower rib margin) ── */}
-      <path d="M 64,16 C 72,8 86,5 100,5 C 114,5 128,8 136,16"
+      {/* ── Costal arch ── */}
+      <path d="M 62,16 C 72,7 86,4 100,4 C 114,4 128,7 138,16"
         fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.1" strokeLinecap="round"/>
-      {/* Costal margin side drops */}
-      <path d="M 58,20 C 52,30 49,42 48,56"
-        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.9" strokeLinecap="round"/>
-      <path d="M 142,20 C 148,30 151,42 152,56"
-        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="0.9" strokeLinecap="round"/>
+
+      {/* ── Oblique flank hints ── */}
+      <path d="M 58,22 C 50,56 46,96 46,134"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9" strokeLinecap="round"/>
+      <path d="M 142,22 C 150,56 154,96 154,134"
+        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9" strokeLinecap="round"/>
 
       {/* ── Linea alba ── */}
-      <line x1="100" y1="18" x2="100" y2="224"
-        stroke="rgba(255,255,255,0.07)" strokeWidth="0.8" strokeDasharray="2,5"/>
+      <line x1="100" y1="18" x2="100" y2="222"
+        stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" strokeDasharray="2,5"/>
 
-      {/* ── Rectus abdominis column hints ── */}
-      <path d="M 91,18 C 89,68 88,112 89,162 C 90,190 92,212 95,224"
-        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1"/>
-      <path d="M 109,18 C 111,68 112,112 111,162 C 110,190 108,212 105,224"
-        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1"/>
+      {/* ── Belly button ── */}
+      <ellipse cx="100" cy="124" rx="6" ry="5"
+        fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.14)" strokeWidth="1.1"/>
+      <ellipse cx="100" cy="123.5" rx="3" ry="2.4" fill="rgba(0,0,0,0.65)"/>
 
-      {/* ── Tendinous inscriptions (3 bands) ── */}
-      <path d="M 89,86 Q 94,84 100,84 Q 106,84 111,86"
-        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
-      <path d="M 89,128 Q 94,126 100,126 Q 106,126 111,128"
-        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
-      <path d="M 89,168 Q 94,166 100,166 Q 106,166 111,168"
-        fill="none" stroke="rgba(255,255,255,0.045)" strokeWidth="0.8" strokeLinecap="round"/>
-
-      {/* ── External oblique hints ── */}
-      <path d="M 60,18 C 53,50 49,88 47,118"
-        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9"/>
-      <path d="M 140,18 C 147,50 151,88 153,118"
-        fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.9"/>
-
-      {/* ── Inguinal ligament V ── */}
-      <path d="M 64,214 C 74,224 88,228 100,228"
-        fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" strokeLinecap="round"/>
-      <path d="M 136,214 C 126,224 112,228 100,228"
-        fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" strokeLinecap="round"/>
-
-      {/* ── Belly button (layered for depth) ── */}
-      <ellipse cx="100" cy="130" rx="7.5" ry="6"
-        fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2"/>
-      <ellipse cx="100" cy="129.5" rx="4.8" ry="3.8"
-        fill="rgba(0,0,0,0.6)" stroke="rgba(255,255,255,0.09)" strokeWidth="1"/>
-      <ellipse cx="100" cy="129" rx="2.2" ry="1.8" fill="rgba(0,0,0,0.7)"/>
-
-      {/* ── Zone crosshair targets ── */}
+      {/* ── Zone targets ── */}
       {ZONES.filter(z => z.area === "abdomen").map(zone => {
         const { cx, cy } = ABD_POS[zone.id];
         const log   = logs[zone.id];
@@ -140,27 +116,15 @@ function AbdomenSVG({ logs, onZoneClick }) {
         return (
           <g key={zone.id} onClick={() => onZoneClick(zone)} style={{ cursor: "pointer" }}>
             {/* Large invisible tap target */}
-            <circle cx={cx} cy={cy} r="26" fill="transparent"/>
+            <circle cx={cx} cy={cy} r="19" fill="transparent"/>
             {/* Main circle */}
-            <circle cx={cx} cy={cy} r="17" fill={bg} stroke={color} strokeWidth="1.3"/>
-            {/* Crosshair ticks outside the circle */}
-            <line x1={cx-22} y1={cy}    x2={cx-19} y2={cy}    stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
-            <line x1={cx+19} y1={cy}    x2={cx+22} y2={cy}    stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
-            <line x1={cx}    y1={cy-22} x2={cx}    y2={cy-19} stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
-            <line x1={cx}    y1={cy+19} x2={cx}    y2={cy+22} stroke={color} strokeWidth="0.9" strokeOpacity="0.55"/>
-            {/* Zone label */}
-            <text x={cx} y={log ? cy - 3 : cy}
+            <circle cx={cx} cy={cy} r="11" fill={bg} stroke={color} strokeWidth="1.3"/>
+            {/* Label */}
+            <text x={cx} y={cy}
               textAnchor="middle" dominantBaseline="middle"
-              fontSize="7.5" fontWeight="700" fill={color} fontFamily="system-ui" letterSpacing="0.5">
+              fontSize="7" fontWeight="700" fill={color} fontFamily="system-ui" letterSpacing="0.2">
               {zone.short}
             </text>
-            {log && (
-              <text x={cx} y={cy + 7}
-                textAnchor="middle" dominantBaseline="middle"
-                fontSize="5.5" fill={color} opacity="0.6" fontFamily="system-ui">
-                {isReady(log) ? "ready" : fmtCool(coolLeft(log))}
-              </text>
-            )}
           </g>
         );
       })}
@@ -237,18 +201,14 @@ function GluteSVG({ logs, onZoneClick }) {
       <path d="M 184,80 C 186,90 186,102 184,112"
         fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1.2" strokeLinecap="round"/>
 
-      {/* ── Left zone crosshair target ── */}
+      {/* ── Left zone target ── */}
       <g onClick={() => onZoneClick(GLT_L)} style={{ cursor: "pointer" }}>
         <circle cx="56" cy="108" r="28" fill="transparent"/>
-        <circle cx="56" cy="108" r="17" fill={lBg} stroke={lColor} strokeWidth="1.3"/>
-        <line x1="34"  y1="108" x2="37"  y2="108" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
-        <line x1="75"  y1="108" x2="78"  y2="108" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
-        <line x1="56"  y1="86"  x2="56"  y2="89"  stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
-        <line x1="56"  y1="127" x2="56"  y2="130" stroke={lColor} strokeWidth="0.9" strokeOpacity="0.55"/>
-        <text x="56" y={log ? "105" : "108"} textAnchor="middle" dominantBaseline="middle"
-          fontSize="7.5" fontWeight="700" fill={lColor} fontFamily="system-ui" letterSpacing="0.5">GL</text>
+        <circle cx="56" cy="108" r="16" fill={lBg} stroke={lColor} strokeWidth="1.3"/>
+        <text x="56" y={log ? "104" : "108"} textAnchor="middle" dominantBaseline="middle"
+          fontSize="8" fontWeight="700" fill={lColor} fontFamily="system-ui" letterSpacing="0.5">GL</text>
         {log && (
-          <text x="56" y="116" textAnchor="middle" dominantBaseline="middle"
+          <text x="56" y="115" textAnchor="middle" dominantBaseline="middle"
             fontSize="5.5" fill={lColor} opacity="0.6" fontFamily="system-ui">
             {isReady(log) ? "ready" : fmtCool(coolLeft(log))}
           </text>
