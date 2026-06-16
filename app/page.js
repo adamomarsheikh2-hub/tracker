@@ -370,6 +370,9 @@ export default function InjectionTracker() {
   const [dbError, setDbError] = useState(null);
   const [modal,   setModal]   = useState(null);
   const [, setNow]            = useState(Date.now());
+  const [pendingDelete, setPendingDelete] = useState(null);
+
+  useEffect(() => { setPendingDelete(null); }, [tab]);
 
   useEffect(() => {
     fetch("/api/state")
@@ -404,6 +407,23 @@ export default function InjectionTracker() {
     setLogs(newLogs);
     setHistory(newHist);
     persist(newLogs, newHist);
+  };
+
+  const handleDeleteEntry = idx => {
+    const entry = history[idx];
+    const newHist = history.filter((_, i) => i !== idx);
+    const zoneEntries = newHist.filter(h => h.zone === entry.zone);
+    const newLogs = { ...logs };
+    if (zoneEntries.length === 0) {
+      delete newLogs[entry.zone];
+    } else {
+      const newest = zoneEntries.reduce((a, b) => new Date(a.time) > new Date(b.time) ? a : b);
+      newLogs[entry.zone] = { time: newest.time, compound: newest.compound, count: zoneEntries.length };
+    }
+    setHistory(newHist);
+    setLogs(newLogs);
+    persist(newLogs, newHist);
+    setPendingDelete(null);
   };
 
   if (!loaded) return (
@@ -611,11 +631,14 @@ export default function InjectionTracker() {
           {history.map((entry, i) => {
             const zone = ZONE_MAP[entry.zone];
             const c    = COMPOUNDS[entry.compound];
+            const confirming = pendingDelete === i;
             return (
               <div key={i} style={{
-                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${confirming ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.07)"}`,
                 borderRadius: 13, padding: "12px 16px", marginBottom: 8,
                 display: "flex", justifyContent: "space-between", alignItems: "center",
+                transition: "border-color 150ms ease",
               }}>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: c?.color || "#f0f0f8", marginBottom: 3 }}>
@@ -625,9 +648,33 @@ export default function InjectionTracker() {
                     {zone ? `${zone.label} (${zone.area === "abdomen" ? "Abd" : "Glt"})` : entry.zone}
                   </div>
                 </div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.28)", textAlign: "right" }}>
-                  {fmtAgo(entry.time)}
-                </div>
+
+                {confirming ? (
+                  <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                    <button onClick={() => setPendingDelete(null)} style={{
+                      padding: "6px 12px", borderRadius: 100,
+                      background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                      color: "rgba(255,255,255,0.5)", fontSize: 11, fontFamily: F, cursor: "pointer",
+                    }}>Cancel</button>
+                    <button onClick={() => handleDeleteEntry(i)} style={{
+                      padding: "6px 12px", borderRadius: 100,
+                      background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)",
+                      color: "#f87171", fontSize: 11, fontWeight: 600, fontFamily: F, cursor: "pointer",
+                    }}>Delete</button>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.28)", textAlign: "right" }}>
+                      {fmtAgo(entry.time)}
+                    </div>
+                    <button onClick={() => setPendingDelete(i)} style={{
+                      width: 22, height: 22, borderRadius: "50%",
+                      background: "transparent", border: "none",
+                      color: "rgba(255,255,255,0.22)", fontSize: 15, lineHeight: 1, cursor: "pointer",
+                      display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F,
+                    }}>×</button>
+                  </div>
+                )}
               </div>
             );
           })}
