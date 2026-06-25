@@ -60,13 +60,13 @@ function fmtAgo(iso) {
 function zoneColor(log) {
   if (!log) return "rgba(255,255,255,0.22)";
   if (!isReady(log)) return COMPOUNDS[log.compound]?.color || "#fb923c";
-  return "#34d399";
+  return "rgba(255,255,255,0.35)";
 }
 
 function zoneBg(log) {
   if (!log) return "rgba(255,255,255,0.03)";
   if (!isReady(log)) return COMPOUNDS[log.compound]?.bg || "rgba(251,146,60,0.08)";
-  return "rgba(52,211,153,0.07)";
+  return "rgba(255,255,255,0.04)";
 }
 
 // ── Abdomen SVG ───────────────────────────────────────────────────────────────
@@ -517,7 +517,7 @@ export default function InjectionTracker() {
           <div style={{ display: "flex", gap: 18, marginTop: 2, fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
             <span><span style={{ color: "#5cc8f0" }}>●</span> GHK-Cu</span>
             <span><span style={{ color: "#b890e8" }}>●</span> IPA+CJC</span>
-            <span><span style={{ color: "#34d399" }}>●</span> Ready</span>
+            <span><span style={{ color: "rgba(255,255,255,0.35)" }}>●</span> Ready</span>
           </div>
           <div style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", marginTop: 0 }}>
             Tap a zone to log a pin
@@ -552,7 +552,7 @@ export default function InjectionTracker() {
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
                   {ready
-                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
+                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
                     : <div><div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div><div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div></div>
                   }
                 </div>
@@ -585,7 +585,7 @@ export default function InjectionTracker() {
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
                   {ready
-                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.18)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
+                    ? <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", padding: "4px 10px", borderRadius: 100 }}>Ready</span>
                     : <div><div style={{ fontSize: 14, fontWeight: 700, color: "#fb923c" }}>{fmtCool(cool)}</div><div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)" }}>remaining</div></div>
                   }
                 </div>
